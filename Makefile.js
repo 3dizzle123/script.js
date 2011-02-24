@@ -1,20 +1,16 @@
 #!/usr/bin/env node
 
 var fs = require('fs'),
-uglifyJs = require('./build/UglifyJS'),
-jshint = require('./build/jshint/jshint').JSHINT,
+  uglifyJs = require('./build/UglifyJS');
 
 BUILD_DIR   = 'build',
 DIST_DIR    = 'dist',
 SRC_DIR     = 'src',
 
-jshint_opts = {devel: true, forin: true, undef: true, browser: true};
-
 console.log("Loading $script source...");
 
 var $script = fs.readFileSync(SRC_DIR + '/script.js', 'UTF-8'),
     header = fs.readFileSync(SRC_DIR + '/header.js', 'UTF-8');
-
 
 var ast = uglifyJs.parser.parse($script); // parse code and get the initial AST
 ast = uglifyJs.uglify.ast_mangle(ast); // get a new AST with mangled names
